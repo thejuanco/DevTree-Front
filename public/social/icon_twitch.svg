@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Graphic_Elements" data-name="Graphic Elements" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <style>
+      .cls-1, .cls-2, .cls-3 {
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        fill: #9146ff;
+      }
+
+      .cls-3 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <circle class="cls-2" cx="60.17" cy="60.41" r="52"/>
+  <g>
+    <polygon class="cls-3" points="85.85 61.69 75.58 71.96 65.31 71.96 56.32 80.95 56.32 71.96 44.77 71.96 44.77 33.45 85.85 33.45 85.85 61.69"/>
+    <g id="Layer_1-2" data-name="Layer 1-2">
+      <path class="cls-1" d="m42.2,28.31l-12.84,12.84v46.22h15.41v12.84l12.84-12.84h10.27l23.11-23.11V28.31h-48.79Zm43.65,33.38l-10.27,10.27h-10.27l-8.99,8.99v-8.99h-11.56v-38.52h41.08v28.25Z"/>
+      <rect class="cls-1" x="73.01" y="42.43" width="5.14" height="15.41"/>
+      <rect class="cls-1" x="58.89" y="42.43" width="5.14" height="15.41"/>
+    </g>
+  </g>
+</svg>
