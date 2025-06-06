@@ -12,11 +12,14 @@ const RegisterView = () => {
     password_confirmation: ''
   }
 
-  const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues })
+  const { register, watch, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues })
 
   const handleRegister = () => {
     console.log("Registering user")
   }
+
+  const password = watch('password')
+  console.log(password)
 
   return (
     <>
@@ -53,7 +56,11 @@ const RegisterView = () => {
               required: {
                 value: true,
                 message: "El correo es obligatorio"
-              }
+              },
+              pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: "E-mail no válido",
+              },
             })}
           />
           {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
@@ -85,6 +92,10 @@ const RegisterView = () => {
               required: {
                 value: true,
                 message: "El password es obligatorio"
+              },
+              minLength: {
+                value: 8,
+                message: "El password debe de ser minimo de 8 caracteres"
               }
             })}
           />
@@ -101,7 +112,8 @@ const RegisterView = () => {
               required: {
                 value: true,
                 message: "El password es obligatorio"
-              }
+              },
+              validate: (value) => value === password || "Las contraseñas no son iguales"
             })}
           />
         </div>
