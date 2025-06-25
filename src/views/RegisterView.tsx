@@ -1,6 +1,6 @@
 import { Link } from "react-router"
 import { useForm } from "react-hook-form"
-import axios from "axios"
+import axios, { isAxiosError } from "axios"
 import ErrorMessage from "../components/ErrorMessage"
 import type { RegisterForm } from "../types"
 
@@ -18,10 +18,12 @@ const RegisterView = () => {
 
   const handleRegister = async (formData : RegisterForm) => {
     try {
-      const response = await axios.post("http://localhost:4000/auth/register", formData)
-      console.log(response)
+      const {data} = await axios.post("http://localhost:4000/auth/register", formData)
+      console.log(data.message)
     } catch (error) {
-      console.log(error)
+      if(isAxiosError(error) && error.response) {
+        console.log(error.response.data.error)
+      }
     }
   }
 
@@ -29,14 +31,14 @@ const RegisterView = () => {
 
   return (
     <>
-      <h1 className="text-4xl text-white font-bold">Crear cuenta</h1>
+      <h1 className="text-3xl text-white font-bold">Crear cuenta</h1>
 
       <form
         onSubmit={handleSubmit(handleRegister)}
-        className="bg-white px-5 py-20 rounded-lg space-y-10 mt-10"
+        className="bg-white px-5 py-10 rounded-lg space-y-6 mt-10"
       >
         <div className="grid grid-cols-1 space-y-3">
-          <label htmlFor="name" className="text-2xl text-slate-500">Nombre</label>
+          <label htmlFor="name" className="text-xl text-slate-500">Nombre</label>
           <input
             id="name"
             type="text"
@@ -52,7 +54,7 @@ const RegisterView = () => {
           {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
         </div>
         <div className="grid grid-cols-1 space-y-3">
-          <label htmlFor="email" className="text-2xl text-slate-500">E-mail</label>
+          <label htmlFor="email" className="text-xl text-slate-500">E-mail</label>
           <input
             id="email"
             type="email"
@@ -72,7 +74,7 @@ const RegisterView = () => {
           {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
         </div>
         <div className="grid grid-cols-1 space-y-3">
-          <label htmlFor="handle" className="text-2xl text-slate-500">Handle</label>
+          <label htmlFor="handle" className="text-xl text-slate-500">Handle</label>
           <input
             id="handle"
             type="text"
@@ -88,7 +90,7 @@ const RegisterView = () => {
           {errors.handle && <ErrorMessage>{errors.handle.message}</ErrorMessage>}
         </div>
         <div className="grid grid-cols-1 space-y-3">
-          <label htmlFor="password" className="text-2xl text-slate-500">Password</label>
+          <label htmlFor="password" className="text-xl text-slate-500">Password</label>
           <input
             id="password"
             type="password"
@@ -108,7 +110,7 @@ const RegisterView = () => {
         </div>
         {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
         <div className="grid grid-cols-1 space-y-3">
-          <label htmlFor="password_confirmation" className="text-2xl text-slate-500">Repetir Password</label>
+          <label htmlFor="password_confirmation" className="text-xl text-slate-500">Repetir Password</label>
           <input
             id="password_confirmation"
             type="password"
@@ -126,7 +128,7 @@ const RegisterView = () => {
         {errors.password_confirmation && <ErrorMessage>{errors.password_confirmation.message}</ErrorMessage>}
         <input
           type="submit"
-          className="bg-cyan-400 p-3 text-lg w-full uppercase text-slate-600 rounded-lg font-bold cursor-pointer"
+          className="bg-cyan-400 p-2 text-lg w-full uppercase text-slate-600 rounded-md font-bold cursor-pointer"
           value='Crear Cuenta'
         />
       </form>
