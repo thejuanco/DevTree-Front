@@ -14,12 +14,14 @@ const RegisterView = () => {
     password_confirmation: ''
   }
 
-  const { register, watch, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues })
+  const { register, watch, reset, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues })
 
   const handleRegister = async (formData : RegisterForm) => {
     try {
       const {data} = await axios.post(`${import.meta.env.VITE_API_URL}/auth/register`, formData)
       console.log(data.message)
+      //Reiniciar el formulario
+      reset(initialValues)
     } catch (error) {
       if(isAxiosError(error) && error.response) {
         console.log(error.response.data.error)
