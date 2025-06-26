@@ -17,6 +17,7 @@ const LoginView = () => {
   const handleLogin = async ( formData : LoginForm ) => {
     try {
       const {data} = await api.post(`/auth/login`, formData)
+      localStorage.setItem('AUTH_TOKEN', data)
       toast.success(data.message)
       //Reiniciar el formulario
       reset(initialValues)
