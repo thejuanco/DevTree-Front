@@ -1,6 +1,7 @@
 import { Link, Outlet } from "react-router";
 import { Toaster } from "sonner";
 import { useQuery } from "@tanstack/react-query";
+import { Navigate } from "react-router";
 import NavigationTabs from "../components/NavigationTabs";
 import { getUser } from "../api/DevTreeAPI";
 
@@ -11,6 +12,11 @@ export default function AppLayout() {
         retry: 1,
         refetchOnWindowFocus: false
     })
+
+    if(isLoading) return 'Cargando...'
+    if(isError){
+        return <Navigate to={'/auth/login'}/>
+    }
 
     return (
         <>
