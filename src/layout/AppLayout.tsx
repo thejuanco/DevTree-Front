@@ -13,7 +13,8 @@ export default function AppLayout() {
     })
 
     if(isLoading) return 'Cargando...'
-    if(isError){
+    if(isError || data?.email == undefined){
+        console.log("Redi")
         return <Navigate to={'/auth/login'}/>
     }
 
