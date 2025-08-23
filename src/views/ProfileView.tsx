@@ -1,14 +1,20 @@
 import { useForm } from "react-hook-form"
+import { useQueryClient } from "@tanstack/react-query"
 import ErrorMessage from "../components/ErrorMessage"
+import type { User } from "../types"
 
 export default function ProfileView() {
+    const queryClient = useQueryClient()
+    const data : User = queryClient.getQueryData(['user'])!
 
-    const { register, watch, reset, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
-            handle: '',
-            description: ''
+            handle: data.handle,
+            description: data.description
         }
     })
+
+    console.log(data)
 
     const handleUserProfile = (data: any) => {
         console.log(data)
