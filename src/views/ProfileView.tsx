@@ -23,6 +23,8 @@ export default function ProfileView() {
         },
         onSuccess: (data) => {
             toast.success(data)
+            //Invalidar el query
+            queryClient.invalidateQueries({queryKey: ['user']})
         }
     })
 
