@@ -16,6 +16,7 @@ export default function ProfileView() {
         }
     })
 
+    //Mutacion: datos de la api
     const updateProfileMutation = useMutation({
         mutationFn: updateProfile,
         onError: (error) => {
@@ -28,6 +29,13 @@ export default function ProfileView() {
         }
     })
 
+    const handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+        if(e.target.files){
+            console.log(e.target.files[0])
+        }
+    }
+
+    //Mutacion para subir la imagen al servidor
     const handleUserProfile = (formData: ProfileForm) => {
         updateProfileMutation.mutate(formData)
     }
@@ -77,7 +85,7 @@ export default function ProfileView() {
                     name="handle"
                     className="border-none bg-slate-100 rounded-lg p-2"
                     accept="image/*"
-                    onChange={ () => {} }
+                    onChange={handleChange}
                 />
             </div>
 
