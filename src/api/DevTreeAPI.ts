@@ -29,3 +29,19 @@ export async function updateProfile(formData : ProfileForm) {
       }
     }
 }
+
+export async function uploadImage(file : File) {
+  //No se envia el archivo completo se crea un objeto formData
+  let formData = new FormData()
+  formData.append('file', file)
+
+  try {
+      const {data} = await api.post('/user/image', formData)
+      return data
+    } catch (error) {
+      if(isAxiosError(error) && error.response) {
+        console.log(error.response.data)
+        throw new Error(error.response.data.error)
+      }
+    }
+}
