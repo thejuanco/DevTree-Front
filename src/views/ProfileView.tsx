@@ -32,17 +32,23 @@ export default function ProfileView() {
     const uploadImageMutation = useMutation({
         mutationFn: uploadImage,
         onError: (error) => {
-            console.log(error)
+            toast.error(error.message)
         },
         onSuccess: (data) => {
-            console.log(data)
+            //queryClient.invalidateQueries({queryKey: ['user']})
+            //Recupera el state, y cambia la respuesta del servidor
+            queryClient.setQueryData(['user'], (prevData : User) => {
+                return {
+                    ...prevData,
+                    image: data.image
+                }
+            })
         }
     })
 
     const handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
         if(e.target.files){
             uploadImageMutation.mutate(e.target.files[0])
-            queryClient.invalidateQueries({queryKey: ['user']})
         }
     }
 
