@@ -1,9 +1,10 @@
 export type User = {
-    handle: string,
-    name: string,
-    email: string,
-    password: string,
+    handle: string
+    name: string
+    email: string
+    password: string
     description: string
+    image: string
 }
 
 //Heredando los atributos del User

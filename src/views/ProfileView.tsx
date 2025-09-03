@@ -42,6 +42,7 @@ export default function ProfileView() {
     const handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
         if(e.target.files){
             uploadImageMutation.mutate(e.target.files[0])
+            queryClient.invalidateQueries({queryKey: ['user']})
         }
     }
 
