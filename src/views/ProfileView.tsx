@@ -54,7 +54,10 @@ export default function ProfileView() {
 
     //Mutacion para subir la imagen al servidor
     const handleUserProfile = (formData: ProfileForm) => {
-        updateProfileMutation.mutate(formData)
+        const user : User = queryClient.getQueryData(['user'])! //se agrega un ! para decirle a ts que ese valor siempre va a existir
+        user.description = formData.description
+        user.handle = formData.handle
+        updateProfileMutation.mutate(user)
     }
 
     return (

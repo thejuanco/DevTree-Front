@@ -3,8 +3,9 @@ import { social } from "../data/social"
 import DevTreeInput from "../components/DevTreeInput"
 import { isValidUrl } from "../utils"
 import { toast } from "sonner"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { updateProfile } from "../api/DevTreeAPI"
+import type { User } from "../types"
 
 export default function LinkTreeView () {
 
@@ -15,6 +16,8 @@ export default function LinkTreeView () {
     setDevTreeLinks(updatedLinks)
   }
 
+  const queryClient = useQueryClient()
+  const user : User = queryClient.getQueryData(['user'])!
   const { mutate } = useMutation({
     mutationFn: updateProfile,
     onSuccess: () => {
@@ -37,6 +40,13 @@ export default function LinkTreeView () {
       return link
     })
     setDevTreeLinks(updatedLinks)
+    //Actualiza los datos cacheados
+    queryClient.setQueryData(['user'], (prevData: User) => {
+      return {
+        ...prevData,
+        links: JSON.stringify(updatedLinks)
+      }
+    })
   }
 
   return (
@@ -50,7 +60,10 @@ export default function LinkTreeView () {
             handleEnableLink={handleEnableLink}
           />
         ))}
-        <button className="bg-cyan-500 p-2 text-lg w-full uppercase font-bold rounded-lg hover:bg-cyan-400">Guardar cambios</button>
+        <button 
+          className="bg-cyan-500 p-2 text-lg w-full uppercase font-bold rounded-lg hover:bg-cyan-400"
+          onClick={() => mutate(user)}
+        >Guardar cambios</button>
       </div>
     </>
   )
