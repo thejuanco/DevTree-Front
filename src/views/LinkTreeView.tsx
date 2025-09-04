@@ -3,6 +3,8 @@ import { social } from "../data/social"
 import DevTreeInput from "../components/DevTreeInput"
 import { isValidUrl } from "../utils"
 import { toast } from "sonner"
+import { useMutation } from "@tanstack/react-query"
+import { updateProfile } from "../api/DevTreeAPI"
 
 export default function LinkTreeView () {
 
@@ -12,6 +14,16 @@ export default function LinkTreeView () {
     const updatedLinks = devTreeLinks.map(link => link.name == e.target.name ? { ...link, url: e.target.value } : link)
     setDevTreeLinks(updatedLinks)
   }
+
+  const { mutate } = useMutation({
+    mutationFn: updateProfile,
+    onSuccess: () => {
+      toast.success("Actualizado correctamente")
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    }
+  })
 
   const handleEnableLink = (socialNetwork : string) => {
     const updatedLinks = devTreeLinks.map(link => {
@@ -38,6 +50,7 @@ export default function LinkTreeView () {
             handleEnableLink={handleEnableLink}
           />
         ))}
+        <button className="bg-cyan-500 p-2 text-lg w-full uppercase font-bold rounded-lg hover:bg-cyan-400">Guardar cambios</button>
       </div>
     </>
   )
