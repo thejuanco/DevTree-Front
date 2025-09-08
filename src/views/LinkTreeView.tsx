@@ -5,7 +5,7 @@ import { isValidUrl } from "../utils"
 import { toast } from "sonner"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { updateProfile } from "../api/DevTreeAPI"
-import type { User } from "../types"
+import type { SocialNetwork, User } from "../types"
 
 export default function LinkTreeView () {
 
@@ -40,7 +40,7 @@ export default function LinkTreeView () {
     //Obtiene los links
     const updatedData = devTreeLinks.map(item => {
       //Los convierte en arreglo y retorna los elementos
-      const userLink = JSON.parse(user.links).find((link: { name: string }) => link.name === item.name)
+      const userLink = JSON.parse(user.links).find((link: SocialNetwork ) => link.name === item.name)
       //Asigna los valores de la url de la base al usuario
       if (userLink) {
         return {
