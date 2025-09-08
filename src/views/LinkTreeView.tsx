@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { social } from "../data/social"
 import DevTreeInput from "../components/DevTreeInput"
 import { isValidUrl } from "../utils"
@@ -14,6 +14,14 @@ export default function LinkTreeView () {
   const handleUrlChange = (e : React.ChangeEvent<HTMLInputElement>) => {
     const updatedLinks = devTreeLinks.map(link => link.name == e.target.name ? { ...link, url: e.target.value } : link)
     setDevTreeLinks(updatedLinks)
+
+    //Actualiza los datos cacheados
+    queryClient.setQueryData(['user'], (prevData: User) => {
+      return {
+        ...prevData,
+        links: JSON.stringify(updatedLinks)
+      }
+    })
   }
 
   const queryClient = useQueryClient()
@@ -27,6 +35,23 @@ export default function LinkTreeView () {
       toast.error(error.message)
     }
   })
+
+  useEffect(() => {
+    //Obtiene los links
+    const updatedData = devTreeLinks.map(item => {
+      //Los convierte en arreglo y retorna los elementos
+      const userLink = JSON.parse(user.links).find((link: { name: string }) => link.name === item.name)
+      //Asigna los valores de la url de la base al usuario
+      if (userLink) {
+        return {
+          ...item, url: userLink.url, enabled: userLink.enabled
+        }
+      }
+      return item
+    })
+    //Actualiza el state
+    setDevTreeLinks(updatedData)
+  }, [])
 
   const handleEnableLink = (socialNetwork : string) => {
     const updatedLinks = devTreeLinks.map(link => {

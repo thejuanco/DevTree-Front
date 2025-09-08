@@ -5,6 +5,7 @@ export type User = {
     password: string
     description: string
     image: string
+    links: string
 }
 
 //Heredando los atributos del User
