@@ -16,12 +16,12 @@ export default function LinkTreeView () {
     setDevTreeLinks(updatedLinks)
 
     //Actualiza los datos cacheados
-    queryClient.setQueryData(['user'], (prevData: User) => {
-      return {
-        ...prevData,
-        links: JSON.stringify(updatedLinks)
-      }
-    })
+    // queryClient.setQueryData(['user'], (prevData: User) => {
+    //   return {
+    //     ...prevData,
+    //     links: JSON.stringify(updatedLinks)
+    //   }
+    // })
   }
 
   const queryClient = useQueryClient()
@@ -53,6 +53,9 @@ export default function LinkTreeView () {
     setDevTreeLinks(updatedData)
   }, [])
 
+  //Conocer la extension de los links almacenados
+  const links : SocialNetwork[] = JSON.parse(user.links)
+
   const handleEnableLink = (socialNetwork : string) => {
     const updatedLinks = devTreeLinks.map(link => {
       if(link.name === socialNetwork){
@@ -65,7 +68,23 @@ export default function LinkTreeView () {
       return link
     })
     setDevTreeLinks(updatedLinks)
-    //Actualiza los datos cacheados
+
+    let updatedItems : SocialNetwork[] = []
+
+    const selectedSocialNetwork = updatedLinks.find(link => link.name === socialNetwork)
+    if(selectedSocialNetwork?.enabled){
+      const newItem = {
+        ...selectedSocialNetwork,
+        id: links.length + 1
+      }
+      updatedItems = [...links, newItem]
+    } else {
+      console.log('Almacenando')
+    }
+
+    console.log(updatedItems)
+
+    //Actualiza los datos cacheados y almancena en la base de datos
     queryClient.setQueryData(['user'], (prevData: User) => {
       return {
         ...prevData,
