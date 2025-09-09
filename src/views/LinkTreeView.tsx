@@ -79,7 +79,7 @@ export default function LinkTreeView () {
       }
       updatedItems = [...links, newItem]
     } else {
-      console.log('Almacenando')
+      updatedItems = links.filter(link => link.name !== selectedSocialNetwork?.name)
     }
 
     console.log(updatedItems)
@@ -88,7 +88,7 @@ export default function LinkTreeView () {
     queryClient.setQueryData(['user'], (prevData: User) => {
       return {
         ...prevData,
-        links: JSON.stringify(updatedLinks)
+        links: JSON.stringify(updatedItems)
       }
     })
   }
