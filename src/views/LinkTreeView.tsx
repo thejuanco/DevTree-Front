@@ -79,7 +79,25 @@ export default function LinkTreeView () {
       }
       updatedItems = [...links, newItem]
     } else {
-      updatedItems = links.filter(link => link.name !== selectedSocialNetwork?.name)
+      const indexToUpdate = links.filter(link => link.name === socialNetwork)
+      updatedItems = links.map(link => {
+        if(link.name === socialNetwork){
+          return {
+            ...link,
+            id: 0,
+            enabled: false
+          }
+        } else if(link.id > indexToUpdate.length){
+          return {
+            ...link,
+            id: link.id - 1
+          }
+        }
+        else {
+          return link
+        }
+      })
+      console.log(indexToUpdate)
     }
 
     console.log(updatedItems)
