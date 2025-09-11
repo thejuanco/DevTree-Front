@@ -18,8 +18,15 @@ export default function DevTree({ data }: DevTreeProps) {
         setEnabledLinks(JSON.parse(data.links).filter((item: SocialNetwork) => item.enabled))
     }, [data])
 
-    const handleDragEnd = () => {
-        console.log('Hola')
+    const handleDragEnd = (e : DragEndEvent) => {
+        const {over, active} = e
+
+        if(over && over.id){
+            const prevIndex = enabledLinks.findIndex(link => link.id === active.id)
+            const newIndex = enabledLinks.findIndex(link => link.id === over.id)
+            const order = arrayMove(enabledLinks, prevIndex, newIndex)
+            setEnabledLinks(order)
+        }
     }
 
     return (
