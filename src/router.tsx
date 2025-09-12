@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import LoginView from "./views/LoginView";
 import RegisterView from "./views/RegisterView";
 import HandleView from "./views/HandleView";
+import NotFoundView from "./views/NotFoundView";
 
 //Components
 import AuthLayout from "./layout/AuthLayout";
@@ -27,6 +28,10 @@ export default function Router() {
 
                 <Route path="/:handle" element={<AuthLayout/>}>
                     <Route element={<HandleView/>} index={true} />
+                </Route>
+
+                <Route path="/404" element={<AuthLayout/>}>
+                    <Route element={<NotFoundView/>} index={true}/>
                 </Route>
             </Routes>
         </BrowserRouter>
