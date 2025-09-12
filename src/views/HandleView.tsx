@@ -1,6 +1,7 @@
 import { Navigate, useParams } from "react-router"
 import { useQuery } from "@tanstack/react-query"
 import { getUserByHandle } from "../api/DevTreeAPI"
+import HandleData from "../components/HandleData"
 
 export default function HandleView() {
   const params = useParams()
@@ -25,10 +26,9 @@ export default function HandleView() {
       </svg>
     </div>
   )
-  // <p className="font-bold text-white text-center">Cargando...</p>
   if (error) return <Navigate to={'/404'} />
 
-  return (
-    <div>HandleView</div>
+  if (data) return (
+    <HandleData data={data}/>
   )
 }

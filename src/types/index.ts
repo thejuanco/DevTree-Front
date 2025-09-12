@@ -8,6 +8,8 @@ export type User = {
     links: string
 }
 
+export type UserHandle = Pick<User, 'description' | 'handle' | 'image' | 'links' | 'name'>
+
 //Heredando los atributos del User
 export type RegisterForm = Pick<User, 'handle' | 'email' | 'name'> & {
     password: string,
