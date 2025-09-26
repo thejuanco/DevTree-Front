@@ -9,6 +9,12 @@ export default function HomeNavigation() {
         >
             Iniciar Sesión
         </Link>
+        <Link
+            to="/auth/login"
+            className="text-slate-800 bg-lime-500 rounded-lg p-2 uppercase font-black text-xs cursor-pointer"
+        >
+            Registrate
+        </Link>
     </>
   )
 }
