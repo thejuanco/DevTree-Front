@@ -61,7 +61,7 @@ export default function SearchForm() {
                 {mutation.isPending && <p className="text-center">Cargando</p>}
                 {mutation.error && <p className="text-center text-red-600 font-semibold">{mutation.error.message}</p>}
                 {mutation.data && <p className="text-center text-cyan-500 text-xl ">
-                    {mutation.data} ir a <Link to="/auth/register" className="hover:underline">Crear mi DevTree</Link>
+                    {mutation.data} ir a <Link to="/auth/register" state={{handle: slugify(handle)}} className="hover:underline">Crear mi DevTree</Link>
                 </p>}
             </div>
 
