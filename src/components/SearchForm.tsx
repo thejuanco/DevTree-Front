@@ -1,6 +1,9 @@
 import { useForm } from "react-hook-form"
+import { useMutation } from "@tanstack/react-query"
 import slugify from "react-slugify"
+import { searchByHandle } from "../api/DevTreeAPI"
 import ErrorMessage from "./ErrorMessage"
+import { Link } from "react-router"
 
 export default function SearchForm() {
     const {
@@ -14,12 +17,22 @@ export default function SearchForm() {
         }
     })
 
+    const mutation = useMutation({
+        mutationFn: searchByHandle
+    })
+
     const handle = watch('handle')
 
     const handleSearch = () => {
-        const slug = slugify(handle, {delimiter: "_"})
-        console.log(slug)
+        try {
+            const slug = slugify(handle, {delimiter: "_"})
+            mutation.mutate(slug)
+        } catch (error) {
+            console.log(error)
+        }
     }
+
+    console.log(mutation)
 
     return (
         <form
@@ -45,7 +58,11 @@ export default function SearchForm() {
             )}
 
             <div className="mt-10">
-
+                {mutation.isPending && <p className="text-center">Cargando</p>}
+                {mutation.error && <p className="text-center text-red-600 font-semibold">{mutation.error.message}</p>}
+                {mutation.data && <p className="text-center text-cyan-500 text-xl ">
+                    {mutation.data} ir a <Link to="/auth/register" className="hover:underline">Crear mi DevTree</Link>
+                </p>}
             </div>
 
             <input
